@@ -4,44 +4,49 @@ from dotenv import load_dotenv
 from langchain_groq import ChatGroq  
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.document_loaders import YoutubeLoader
+from langchain_community.document_loaders import PyPDFLoader
 
 load_dotenv()
 llm = ChatGroq(
     model="llama3-8b-8192" 
 )
 
-url ='{input}'
-loader = YoutubeLoader.from_youtube_url(
-    url,
-    language=['pt']
-)
-lista_documentos = loader.load()
-
-documento = ''
-for doc in lista_documentos:
-    documento = documento + doc.page_content
-
-
-def resposta_bot(mensagens):
-    mensagens_modelo = [('system', 'Você é um assistente divertido chamado BatBot, que usa humor ácido para exemplificar')]
+def resposta_bot(mensagens, documento):
+    mensagem_system = '''Você é um assistente amigável chamado BatBot.
+    Você utiliza as seguintes informações para formular as suas respostas: {informacoes}'''
+    mensagens_modelo = [('system', mensagem_system)]
     mensagens_modelo += mensagens
     template = ChatPromptTemplate.from_messages(mensagens_modelo)
     chain = template | llm
-    return chain.invoke({}).content
+    return chain.invoke({'informacoes': documento}).content
 
 def carrega_site():
     url_site = input('Digite a url do site: ')
+    loader = WebBaseLoader(url_site)
+    lista_documentos = loader.load()
     documento = ''
+    for doc in lista_documentos:
+        documento = documento + doc.page_content
     return documento
 
 def carrega_pdf():
+    caminho = input('Digite o caminho completo do arquivo PDF: ')
+    loader = PyPDFLoader(caminho)
+    lista_documentos = loader.load()
     documento = ''
+    for doc in lista_documentos:
+        documento = documento + doc.page_content
     return documento
 
 def carrega_youtube():
     url_youtube = input('Digite a url do vídeo: ')
+    loader = YoutubeLoader.from_youtube_url(url_youtube, language=['pt'])
+    lista_documentos = loader.load()
     documento = ''
+    for doc in lista_documentos:
+        documento = documento + doc.page_content
     return documento
 
 print('Bem-vindo ao BatBot')
