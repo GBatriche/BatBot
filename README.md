@@ -1,4 +1,4 @@
-# BatBot - Document-Based AI Chatbot
+# BatBot - AI Chatbot
 
 A conversational AI chatbot built with Python using LangChain that can chat about content from websites, PDFs, and YouTube videos.
 
