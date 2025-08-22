@@ -1,14 +1,13 @@
+# BatBot - Document-Based AI Chatbot
 
-# BatBot: AI Chatbot with LangChain
-
-A simple chatbot built with Python using LangChain for natural language processing and AI integration.
+A conversational AI chatbot built with Python using LangChain that can chat about content from websites, PDFs, and YouTube videos.
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/username/ai-chatbot.git
-cd ai-chatbot
+git clone https://github.com/username/batbot.git
+cd batbot
 ```
 
 2. Create a virtual environment:
@@ -24,28 +23,30 @@ pip install -r requirements.txt
 
 ## About
 
-This project implements a conversational AI chatbot using the LangChain framework. The chatbot can maintain contextual conversations and respond to user queries using modern language models.
+BatBot is a friendly AI assistant that can analyze and answer questions about various types of content. Simply provide a website URL, PDF file, or YouTube video, and BatBot will use that information to have contextual conversations with you.
 
 ## Features
 
-- Natural conversation interface
-- Contextual memory
-- Integration with AI providers (OpenAI, Anthropic)
-- Customizable prompts
-- Simple web interface
+- Chat with website content
+- Analyze PDF documents
+- Process YouTube video transcripts
+- Contextual conversation memory
+- Simple command-line interface
 
 ## Technologies
 
 - Python 3.8+
 - LangChain
-- Streamlit
-- OpenAI API
+- Groq (Llama3-8B model)
+- WebBaseLoader for websites
+- PyPDFLoader for PDF files
+- YoutubeLoader for video transcripts
 - python-dotenv
 
 ## Prerequisites
 
 - Python 3.8 or higher
-- API key from your chosen AI provider
+- Groq API key
 
 ## Configuration
 
@@ -54,41 +55,58 @@ This project implements a conversational AI chatbot using the LangChain framewor
 cp .env.example .env
 ```
 
-2. Add your API key to `.env`:
+2. Add your Groq API key to `.env`:
 ```env
-OPENAI_API_KEY=your_api_key_here
-MODEL_NAME=gpt-3.5-turbo
-TEMPERATURE=0.7
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ## Usage
 
-Run the chatbot interface:
+Run the chatbot:
 ```bash
-streamlit run app.py
+python main.py
 ```
 
-Or use it programmatically:
-```python
-from chatbot import ChatBot
+Follow the prompts:
+1. Choose content type (1=Website, 2=PDF, 3=YouTube)
+2. Provide the URL or file path
+3. Start chatting about the content
+4. Type 'x' to exit
 
-bot = ChatBot()
-response = bot.chat("Hello, how are you?")
-print(response)
+Example conversation:
+```
+Welcome to BatBot
+Digite 1 se você quiser conversar com um site
+Digite 2 se você quiser conversar com um PDF  
+Digite 3 se você quiser conversar com um vídeo do YouTube
+1
+Digite a url do site: https://example.com
+Usuario: What is this website about?
+Bot: Based on the website content, this site is about...
+Usuario: x
 ```
 
 ## Project Structure
 
 ```
-ai-chatbot/
-├── src/
-│   ├── chatbot.py       # Main chatbot class
-│   ├── memory.py        # Conversation memory
-│   └── utils.py         # Helper functions
-├── .env.example         # Environment variables template
-├── requirements.txt     # Dependencies
-├── app.py              # Streamlit interface
-└── README.md           # This file
+batbot/
+├── main.py             # Main chatbot application
+├── .env.example        # Environment variables template
+├── requirements.txt    # Dependencies
+└── README.md          # This file
+```
+
+## Dependencies
+
+Add these to your `requirements.txt`:
+```
+langchain
+langchain-groq
+langchain-community
+python-dotenv
+pypdf
+youtube-transcript-api
+beautifulsoup4
 ```
 
 ## Contributing
@@ -99,9 +117,12 @@ ai-chatbot/
 4. Push to the branch
 5. Open a Pull Request
 
+## License
+
+This project is licensed under the MIT License.
 
 ## Contact
 
-Gabriel Batriche- batricheg@gmail.com
+Your Name - your.email@example.com
 
-Project Link: https://github.com/GBatriche/BatBot
+Project Link: https://github.com/username/batbot
